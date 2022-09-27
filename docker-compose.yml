@@ -6,7 +6,7 @@ services:
     hostname: 54.176.95.76
     ports:
       - 27017:27017
-
+      
   mysql:
     image: mysql:latest
     hostname: 54.176.95.76
@@ -17,9 +17,7 @@ services:
       MYSQL_ROOT_PASSWORD: 'Password@123'
       MYSQL_PASSWORD: root
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-
-
-
+      
   product-webapp:
     container_name: product-webapp
     build: product-webapp/
@@ -31,8 +29,7 @@ services:
     ports:
       - 3000:3000
     restart: always
-###
-
+    
   config-server:
     container_name: config-server
     build: config-server/
@@ -41,8 +38,7 @@ services:
     ports:
       - 8888:8888
     restart: always
-
-
+    
   eureka-server:
     container_name: eureka-server
     build: eureka-server/
@@ -53,22 +49,19 @@ services:
     ports:
       - 8761:8761
     restart: always
-
-
+    
   api-gateway:
     build: api-gateway/
     image: glawstraining/sports_arena:api-gateway
     container_name: api-gateway
     restart: always
     hostname: 54.176.95.76
-
     depends_on:
       - eureka-server
       # - config-server
     ports:
       - 8080:8080
-
-
+      
   payment:
     container_name: payment
     build: payment/
@@ -80,8 +73,7 @@ services:
     ports:
       - 8084:8084
     restart: always
-
-
+    
   bookings-management:
     container_name: bookings-management
     build: bookings-management/
@@ -92,12 +84,9 @@ services:
     depends_on:
       - mongoservice
       - eureka-server
-      # - config-server
-      - rabbitmq
-      
+      - rabbitmq      
     restart: always
-
-
+    
   authentication-service:
     container_name: authentication-service
     build: authentication-service/
@@ -108,13 +97,9 @@ services:
     depends_on:
       - mysql
       - eureka-server
-      # - config-server
       - rabbitmq
-
     restart: always
-
-
-
+    
   chat-service:
     container_name: chat-service
     build: chat-service/
@@ -125,7 +110,6 @@ services:
     depends_on:
       - mongoservice
       - eureka-server
-      # - config-server
     restart: always
 
   email-service:
@@ -141,8 +125,7 @@ services:
       - rabbitmq
       - api-gateway
     restart: always
-
-
+    
   team-up:
     container_name: team-up
     build: team-up/
@@ -157,8 +140,7 @@ services:
       - api-gateway
       - mongoservice
     restart: always
-
-
+    
   user-service:
     container_name: user-service
     build: user-service/
@@ -172,9 +154,8 @@ services:
       # - config-server
       - rabbitmq
       - api-gateway
-
     restart: always
-
+    
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
